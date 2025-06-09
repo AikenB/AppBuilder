@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"AppBuilder","l":"ComponentBuilder"},{"p":"AppBuilder","l":"ComponentMover"},{"p":"AppBuilder","l":"DesktopController"},{"p":"AppBuilder","l":"Interactor"}];updateSearchResults();

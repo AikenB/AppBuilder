@@ -1,3 +1,4 @@
+package AppBuilder;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.Component;
@@ -20,10 +21,10 @@ public class ComponentMover {
     private int limitWidth;
     private int limitHeight;
 
-    public int getXDisplacement() {
+    private int getXDisplacement() {
         return xDisplacement;
     }
-    public int getYDisplacement() {
+    private int getYDisplacement() {
         return yDisplacement;
     }
 
@@ -118,17 +119,30 @@ public class ComponentMover {
         xDisplacement += x;
         yDisplacement += y;
     }
+
+    /**
+     * Moves the component by the specified x value. This will change the position of the component by the specified amount in the X direction.
+     * @param x the amount to move the component in the X direction
+     */
     public void moveComponent_X(int x) {
         // xChange = x;
         // moveOnce = true;
         xDisplacement += x;
         
     }
+
+    /**
+     * Moves the component by the specified y value. This will change the position of the component by the specified amount in the Y direction.
+     * @param y the amount to move the component in the Y direction
+     */
     public void moveComponent_Y(int y) {
         // yChange = y;
         // moveOnce = true;
         yDisplacement += y;
     }
+    /**
+     * disables the component movement system. The system can be re-enabled by calling enableComponentMovementSystem().
+     */
     public void stopComponentMovement() {
         enabled = false;
         movementThread.interrupt(); // Stop the movement thread

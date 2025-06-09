@@ -1,3 +1,4 @@
+package AppBuilder;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -65,21 +66,34 @@ public class ComponentBuilder {
     public ComponentBuilder() {
         
     }
+    /**
+     * Creates an object for creating components for a given frame. The panel should be added later and must be added to the frame
+     * @param frame The JFrame to be used
+     */
     public ComponentBuilder(JFrame frame) {
         this.frame = frame;
         
     }
 
+    /**
+     * Sets the frame that the CompopnentBuilder object will use
+     * @param frame The JPanel to be used
+     */
     public void setFrame(JFrame frame) {
         this.frame = frame;
     }
+
+    /**
+     * Sets the panel that the ComponentBuilder object will use
+     * @param panel The JPanel to be used
+     */
     public void setPanel(JPanel panel) {
         this.panel = panel;
     }
 
     /**
      * Gets the x coordinate of the component on a coordinate system where the origin is at the bottom left corner of the panel
-     * @param component 
+     * @param component The component
      * @return The x coordinate of the component. This will be the same as the component's x coordinate in the coordinate system used the Component class
      */
     public int getX(Component component){
@@ -88,7 +102,7 @@ public class ComponentBuilder {
 
     /**
      * Gets the y coordinate of the component on a coordinate system where the origin is at the bottom left corner of the panel
-     * @param component 
+     * @param component The component
      * @return The y coordinate of the component. This will be the height of the panel minus the component's y coordinate in the coordinate system used by the Component class
      */
     public int getY(Component component){
@@ -278,7 +292,6 @@ public class ComponentBuilder {
      * @param visible Whether the frame should be visible upon creation
      * @return a JFrame object
      */
-
     public JFrame createFrame(String title, int width, int height , boolean visible){
         JFrame newFrame = new JFrame(title);
         newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -302,7 +315,6 @@ public class ComponentBuilder {
      * @param text The text to display in the label
      * @param width The width of the label
      * @param height The height of the label
-     * @param scaled Whether the label will be rescaled when the window size is adjusted
      * @return a JLabel object
      */
     public JLabel createLabel(String text, int width, int height) {
@@ -330,7 +342,6 @@ public class ComponentBuilder {
      * @param y The y coordinate of the label
      * @param width The width of the label
      * @param height The height of the label
-     * @param scaled Whether the label will be rescaled when the window size is adjusted
      * @return a JLabel object
      */
     public JLabel createLabel(String text, int x, int y, int width, int height) {
@@ -352,10 +363,9 @@ public class ComponentBuilder {
      * @param text The text to display in the button
      * @param width The width of the button
      * @param height The height of the button
-     * @param scaled Whether the button will be rescaled when the window size is adjusted
      * @return a JButton object
      */
-    public JButton createButton(String text, int width, int height, boolean scaled){
+    public JButton createButton(String text, int width, int height){
         JButton button = new JButton(text);
         button.setSize(width, height);
         panel.add(button);
@@ -379,7 +389,6 @@ public class ComponentBuilder {
      * @param y The y coordinate of the button
      * @param width The width of the button
      * @param height The height of the button
-     * @param scaled Whether the button will be rescaled when the window size is adjusted
      * @return a JButton object
      */
     public JButton createButton(String text, int x, int y, int width, int height) {
@@ -403,7 +412,6 @@ public class ComponentBuilder {
     * @param width The width of the text area
     * @param height The height of the text area
     * @param font The font to use for the text area
-    * @param wrapText Whether the text area should wrap text lines
     * @param scrollable Whether the text area should be wrapped in a JScrollPane
     * @return The created JTextArea or JScrollPane (if scrollable is true)
     */
@@ -455,7 +463,6 @@ public class ComponentBuilder {
     * @param y The y-coordinate of the slider
     * @param width The width of the slider
     * @param height The height of the slider
-    * @param orientation The orientation of the slider (e.g., JSlider.HORIZONTAL)
     * @return The created JSlider
     */
     public JSlider createVerticalSlider(int min, int max, int x, int y, int width, int height) {
@@ -520,7 +527,10 @@ public class ComponentBuilder {
         
     }
 
-
+    /**
+     * Sets the icon of the JFrame window.
+     * @param imagePath The path to the image file to be used as the icon
+     */
     public void setWindowIcon(String imagePath){
         try {
             // Load the image from the provided file path
