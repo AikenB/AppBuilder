@@ -1,6 +1,4 @@
 package AppBuilder;
-import java.util.HashMap;
-import java.util.Map;
 import java.awt.Component;
 import javax.swing.SwingUtilities;
 

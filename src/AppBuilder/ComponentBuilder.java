@@ -34,12 +34,6 @@ import java.awt.Color;       // For setting background colors
 import java.awt.Component;
 import java.awt.Font;        // For customizing fonts
 import java.awt.Graphics;    // For custom painting in `paintComponent()`
-import java.awt.Dimension;   // For specifying preferred/minimum sizes
-import java.awt.Desktop; 
-import java.net.URI;         // For handling URIs
-import java.net.URISyntaxException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 import java.util.HashMap;
 import java.util.Map;
