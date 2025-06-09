@@ -25,16 +25,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 
-// import javafx.application.Application;
-// import javafx.scene.Scene;
-// import javafx.scene.control.Button;
-// import javafx.scene.control.Label;
-// import javafx.scene.image.Image;
-// import javafx.scene.image.ImageView;
-// import javafx.scene.layout.Pane;
-// import javafx.scene.paint.Color;
-// import javafx.scene.text.Font;
-// import javafx.stage.Stage;
+
 
 import java.awt.event.ActionListener; // For button click events
 import java.awt.event.ActionEvent;   // For handling action events
