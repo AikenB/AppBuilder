@@ -35,9 +35,10 @@ public class DesktopController {
     Robot robot; 
     private ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    //NOTE: IF YOUR CODE INVOLVES AUTOMATION WITH YOUR COMPUTER THEN RUN THIS METHOD BEFORE OR BY THE TIME YOUR PROGRAM ENDS. THIS WILL PREVENT YOUR COMPUTER TO CONTINUE PERFORMING ACTIONS AFTER YOUR PROGRAM ENDS
+    
     /**
      * Resets the executor service to a new single-thread executor. This will clear the queue of tasks in the executor
+     * IF YOUR CODE INVOLVES AUTOMATION WITH YOUR COMPUTER THEN RUN THIS METHOD BEFORE OR BY THE TIME YOUR PROGRAM ENDS. THIS WILL PREVENT YOUR COMPUTER TO CONTINUE PERFORMING ACTIONS AFTER YOUR PROGRAM ENDS
      */
     public void resetExecutor() {
         executor.submit(() -> {
