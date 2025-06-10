@@ -28,7 +28,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * The DesktopController class provides methods to interact with the computer itself, such as opening files, URLs, and playing sounds. It also includes methods for simulating keyboard and mouse actions.
+ * The DesktopController class provides methods to interact with the computer itself, such as opening files, URLs, and playing sounds. 
+ * It also includes methods for simulating keyboard and mouse actions. 
  */
 public class DesktopController {
     Component component;

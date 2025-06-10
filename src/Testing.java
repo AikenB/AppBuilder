@@ -104,7 +104,8 @@ public class Testing{
         builder.setWindowIcon("src/Images/amogus.jpg");
         frame.setTitle("Experiment");
         // JLabel label = builder.createLabel("Testing", 0, 0, 100, 50);
-        // JComponent image = builder.createImage("src/Images/amogus.jpg", 0, 0, 100, 100);
+        JComponent image = builder.createImage("src/Images/tungtungtungsahor.png", 0, 0, 100, 100);
+        JButton button = builder.createButton("click", 300, 300,200,50);
         // ComponentMover mover = new ComponentMover(image);
         // ComponentMover mover2 = new ComponentMover(label);
         // mover.enableBoundaryLimits(true, 100, 100);
@@ -115,6 +116,9 @@ public class Testing{
 
         JScrollPane scrollPane = builder.createScrollableArea(300, 50 , 100, 100, textArea);
         JSlider slider = builder.createVerticalSlider(0, 100, 50, 300, 50, 200);
+        JComponent image2 = builder.createImage("src/Images/tungtungtungsahor.png", button, 0, 0, 1, 1);
+        System.out.println(image2.getBounds());
+        System.out.println(button.getBounds());
         //builder.setSliderTrackColor(slider, Color.RED);
         builder.setSliderThumbColor(slider, Color.BLUE);
         builder.addSliderLabel(slider, 100, "Max");
@@ -158,8 +162,13 @@ public class Testing{
         //     // mover2.moveComponent_Y(0);
         // });
         Interactor.addKeyAction(panel, KeyEvent.VK_SPACE, ()->{
-            desktop.moveMouse(700, 700);
-            desktop.scrollMouseWheel(-10);
+            boolean lol = true;
+            while (lol == true){
+                desktop.moveMouse(500, 500);
+            }
+
+            
+            
             
         });
 

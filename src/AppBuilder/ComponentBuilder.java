@@ -124,11 +124,11 @@ public class ComponentBuilder {
     
     /**
      * Paints an image onto a specific component
-     * Note: The coordinates for the image refer to the top left corner of the image
+     * 
      * @param imagePath The path to the image file
      * @param component The omponent to paint the image on
      * @param xPercentage The x coordinate of the image as a percentage of the component's width(0 to 1), with 0 being the left side of the component and 1 being the right side
-     * @param yPercentage The y coordinate of the image as a percentage of the component's height(0 to 1), with 0 being the top side of the component and 1 being the bottom side
+     * @param yPercentage The y coordinate of the image as a percentage of the component's height(0 to 1), with 0 being the bottom side of the component and 1 being the top side
      * @param widthPercentage The width of the image as a percentage of the component's width (0 to 1)
      * @param heightPercentage The height of the image as a percentage of the component's height (0 to 1)
      * @return The image component as a JComponent
@@ -148,12 +148,14 @@ public class ComponentBuilder {
         int initialComponentWidth = component.getWidth();
         int initialComponentHeight = component.getHeight();
         int initialImageX = (int) (xPercentage * initialComponentWidth);
-        int initialImageY = (int) ((1 - yPercentage) * initialComponentHeight - (heightPercentage * initialComponentHeight));
+        int initialImageY = (int) ((1 - yPercentage) * initialComponentHeight - (heightPercentage * initialComponentHeight)); // Adjust for bottom-left origin
         int initialImageWidth = (int) (widthPercentage * initialComponentWidth);
         int initialImageHeight = (int) (heightPercentage * initialComponentHeight);
 
         imageLayer.setBounds(initialImageX, initialImageY, initialImageWidth, initialImageHeight);
         component.add(imageLayer);
+        panel.repaint();
+        panel.revalidate();
 
         frame.addComponentListener(new ComponentAdapter() {
             @Override
