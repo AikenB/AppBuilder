@@ -35,7 +35,7 @@ import java.awt.Color;       // For setting background colors
 import java.awt.Component;
 import java.awt.Font;        // For customizing fonts
 import java.awt.Graphics;    // For custom painting in `paintComponent()`
-
+import java.awt.Graphics2D;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
@@ -534,6 +534,8 @@ public class ComponentBuilder {
         int scaledY = (int) ((panelHeight - (y / 100.0) * panelHeight) - component.getHeight());
         component.setBounds(scaledX, scaledY, component.getWidth(), component.getHeight());
     }
+
+
     /**
      * Customizes the appearance of a JComponent.
      * @param c The component to customize

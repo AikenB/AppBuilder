@@ -117,13 +117,14 @@ public class Testing{
         JScrollPane scrollPane = builder.createScrollableArea(300, 50 , 100, 100, textArea);
         JSlider slider = builder.createVerticalSlider(0, 100, 50, 300, 50, 200);
         JComponent image2 = builder.createImage("src/Images/tungtungtungsahor.png", button, 0, 0, 1, 1);
-        System.out.println(image2.getBounds());
-        System.out.println(button.getBounds());
+        
         //builder.setSliderTrackColor(slider, Color.RED);
         builder.setSliderThumbColor(slider, Color.BLUE);
         builder.addSliderLabel(slider, 100, "Max");
         builder.setTickSpacing(slider, 10,5);
         builder.setSnapToTicks(slider, true);
+
+
         // Interactor.addButtonAction(button, ()->{
         //     builder.scaleComponentCoordinates(image, 20, 20);
             
@@ -162,11 +163,10 @@ public class Testing{
         //     // mover2.moveComponent_Y(0);
         // });
         Interactor.addKeyAction(panel, KeyEvent.VK_SPACE, ()->{
-            boolean lol = true;
-            while (lol == true){
-                desktop.moveMouse(500, 500);
-            }
-
+            
+            desktop.moveMouse(50, 50);
+            System.out.println(desktop.getMouseX());
+            System.out.println(desktop.getMouseY());
             
             
             

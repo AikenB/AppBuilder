@@ -1,6 +1,7 @@
 package AppBuilder;
 import java.awt.Desktop;
 import java.awt.Image;
+import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -11,7 +12,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
-
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
@@ -336,6 +337,43 @@ public class DesktopController {
                 ex.printStackTrace();
             }
         });
+    }
+
+    /**
+     * Drags the mouse from the current position to the specified coordinates.
+     * @param x The x-coordinate to drag to
+     * @param y The y-coordinate to drag to
+     */
+    public void dragMouse(int x, int y) {
+        executor.submit(() -> {
+            try {
+                robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); // Press the left mouse button
+                robot.mouseMove(x, y); // Move the mouse to the specified coordinates
+                robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK); // Release the left mouse button
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+    }
+
+    /**
+    * Gets the current mouse X position relative to the entire screen. 
+    * If this is ran right after running movemouse(x,y) then you will need to add a small delay so that the system has time to retrieve the mouse's position
+    * @return The mouse's X position on the screen
+    */
+    public int getMouseX() {
+        Point mousePoint = MouseInfo.getPointerInfo().getLocation();
+        return  (int) Math.round(mousePoint.getX());
+    }
+
+    /**
+    * Gets the current mouse y position relative to the entire screen.
+    * If this is ran right after running movemouse(x,y) then you will need to add a small delay so that the system has time to retrieve the mouse's position
+    * @return The mouse's y position on the screen
+    */
+    public int getMouseY() {
+        Point mousePoint = MouseInfo.getPointerInfo().getLocation();
+        return  (int) Math.round(mousePoint.getY());
     }
 
     
