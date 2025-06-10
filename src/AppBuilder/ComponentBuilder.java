@@ -611,6 +611,11 @@ public class ComponentBuilder {
         textArea.setWrapStyleWord(wrap); // Wrap at word boundaries if wrapping is enabled
     }
 
+    /**
+     * Sets the text of a JTextComponent (ex: JTextArea, JTextField).
+     * @param textComponent The JTextComponent object to set the text for
+     * @param text The text to set in the JTextComponent
+     */
     public void setText(JTextComponent textComponent, String text) {
         textComponent.setText(text);
     }

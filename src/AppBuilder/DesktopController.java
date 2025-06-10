@@ -277,6 +277,7 @@ public class DesktopController {
     * InputEvent.BUTTON3_DOWN_MASK: Right mouse button)
     *
     * @param button The mouse button to click. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/InputEvent.html
+    * @param delayMS The delay in milliseconds after the mouse click is performed. This is useful for ensuring that the click is registered before any subsequent actions are taken.
     *               
     */
     public void clickMouse(int button , int delayMS) {
@@ -319,8 +320,13 @@ public class DesktopController {
      */
     public void releaseMouseClick(int button) {
         executor.submit(()->{
+            try {
+                robot.mouseRelease(button);
+                Thread.sleep(50);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
             
-            robot.mouseRelease(button);
         });
         
     }
