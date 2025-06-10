@@ -22,6 +22,7 @@ import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 
 import java.awt.event.ComponentAdapter;
@@ -36,8 +37,13 @@ import java.awt.Font;        // For customizing fonts
 import java.awt.Graphics;    // For custom painting in `paintComponent()`
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import javax.swing.Timer;
+import javax.swing.plaf.basic.BasicSliderUI;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.JTextComponent;
 
 /**
  * The ComponentFactory class provides methods to create and manage GUI components such as frames, panels, labels, buttons, and images.
@@ -401,28 +407,25 @@ public class ComponentBuilder {
 
     /**
     * Creates a JTextArea with customizable font, dimensions, and optional scrollbars.
+    * @param text The initial text to display in the text area. The text inside can be modified later.
     * @param x The x-coordinate of the text area
     * @param y The y-coordinate of the text area
     * @param width The width of the text area
     * @param height The height of the text area
-    * @param font The font to use for the text area
-    * @param scrollable Whether the text area should be wrapped in a JScrollPane
     * @return The created JTextArea or JScrollPane (if scrollable is true)
     */
-    public JTextArea createTextArea(int x, int y, int width, int height, Font font) {
-        JTextArea textArea = new JTextArea();
-        textArea.setFont(font); // Set the font
+    public JTextArea createTextArea(String text, int x, int y, int width, int height) {
+        JTextArea textArea = new JTextArea(text);
+        
         textArea.setLineWrap(true); // Enable or disable line wrapping
         textArea.setWrapStyleWord(true); // Wrap at word boundaries if wrapping is enabled
         textArea.setBounds(x, panel.getHeight() - y - height, width, height); // Adjust y-coordinate
         panel.add(textArea);
-
-    // if (scrollable) {
-    //     JScrollPane scrollPane = new JScrollPane(textArea);
-    //     scrollPane.setBounds(x, panel.getHeight() - y - height, width, height);
-    //     panel.add(scrollPane);
-    //     return scrollPane; // Return the scrollable text area
-    // }
+        panel.revalidate();
+        panel.repaint();
+        int initialPanelWidth = panel.getWidth();
+        int initialPanelHeight = panel.getHeight();
+        autoScale(textArea, x, y, initialPanelWidth, initialPanelHeight);
 
         return textArea; // Return the plain text area
     }
@@ -442,6 +445,8 @@ public class ComponentBuilder {
         JScrollPane scrollPane = new JScrollPane(component);
         scrollPane.setBounds(x, adjustedY, width, height);
         panel.add(scrollPane);
+        panel.revalidate();
+        panel.repaint();
         int initialPanelWidth = panel.getWidth();
         int initialPanelHeight = panel.getHeight();
         autoScale(scrollPane, x, y, initialPanelWidth, initialPanelHeight);
@@ -465,6 +470,33 @@ public class ComponentBuilder {
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
         panel.add(slider);
+        panel.revalidate();
+        panel.repaint();
+
+        int initialPanelWidth = panel.getWidth();
+        int initialPanelHeight = panel.getHeight();
+        autoScale(slider, x, y, initialPanelWidth, initialPanelHeight);
+        return slider;
+    }
+
+    /**
+    * Creates a JSlider with customizable range, orientation, and tick marks.
+    * @param min The minimum value of the slider
+    * @param max The maximum value of the slider
+    * @param x The x-coordinate of the slider
+    * @param y The y-coordinate of the slider
+    * @param width The width of the slider
+    * @param height The height of the slider
+    * @return The created JSlider
+    */
+    public JSlider createHorizontalSlider(int min, int max, int x, int y, int width, int height) {
+        JSlider slider = new JSlider(SwingConstants.HORIZONTAL, min, max, 0);
+        slider.setBounds(x, y, width, height);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        panel.add(slider);
+        panel.revalidate();
+        panel.repaint();
 
         int initialPanelWidth = panel.getWidth();
         int initialPanelHeight = panel.getHeight();
@@ -538,6 +570,206 @@ public class ComponentBuilder {
         }
 
     }
+
+    /**
+     * Enables or disables text editing in a JTextComponent object (ex: JTextArea, JTextField).
+     * @param textComponent The JTextComponent object
+     * @param editable true to enable text editing, false to disable it
+     */
+    public void enableTextEditing(JTextComponent textComponent, boolean editable) {
+        textComponent.setEditable(editable);
+    }
+
+    /**
+    * Clears all text from the JTextComponent
+     * @param textComponent The JTextComponent to clear
+    */
+    public void clearText(JTextComponent textComponent) {
+        textComponent.setText("");
+    }
+
+    /**
+    * Retrieves the text from the JTextComponent
+    * @param textComponent The JTextComponent to retrieve the text from
+    * @return The current text in the JTextComponent
+    */
+    public String getText(JTextComponent textComponent) {
+        return textComponent.getText();
+    }
+
+    /**
+    * Enables or disables line wrapping in the JTextArea.
+    * @param textArea The JTextArea to modify
+    * @param wrap true to enable line wrapping, false to disable it
+    */
+    public void setLineWrapping(JTextArea textArea, boolean wrap) {
+        textArea.setLineWrap(wrap);
+        textArea.setWrapStyleWord(wrap); // Wrap at word boundaries if wrapping is enabled
+    }
+
+    public void setText(JTextComponent textComponent, String text) {
+        textComponent.setText(text);
+    }
+
+    /**
+    * Enables or disables focus on the component. This includes labels, buttons, text areas, etc.
+    * @param component The component to modify
+    * @param focusable true to enable focus, false to disable it
+    */
+    public void setFocusable(Component component, boolean focusable) {
+        component.setFocusable(focusable);
+    }
+
+    /**
+    * Limits the maximum number of characters in the JTextArea.
+    * @param textArea The JTextArea to modify
+    * @param maxLength The maximum number of characters allowed
+     */
+    public void setTextAreaLimit(JTextArea textArea, int maxLength) {
+        AbstractDocument doc = (AbstractDocument) textArea.getDocument();
+        doc.setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, javax.swing.text.AttributeSet attrs) throws javax.swing.text.BadLocationException {
+                if (fb.getDocument().getLength() + text.length() - length <= maxLength) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
+    }
+
+    /**
+    * Sets the major and minor tick spacing for the JSlider.
+    * @param slider The JSlider to modify
+    * @param majorTickSpacing The spacing between major ticks
+    * @param minorTickSpacing The spacing between minor ticks
+    */
+    public void setTickSpacing(JSlider slider, int majorTickSpacing, int minorTickSpacing) {
+        slider.setMajorTickSpacing(majorTickSpacing);
+        slider.setMinorTickSpacing(minorTickSpacing);
+        slider.setPaintTicks(true); // Ensure ticks are visible
+    }
+
+    /**
+    * Retrieves the current value of the JSlider.
+    * @param slider The JSlider to query
+    * @return The current value of the slider
+    */
+    public int getSliderValue(JSlider slider) {
+        return slider.getValue();
+    }
+
+    /**
+    * Sets the value of the JSlider.
+    * @param slider The JSlider to modify
+    * @param value The value to set
+    */
+    public void setSliderValue(JSlider slider, int value) {
+        slider.setValue(value);
+    }
+
+    /**
+    * Enables or disables the JSlider.
+     * @param slider The JSlider to modify
+    * @param enabled true to enable the slider, false to disable it
+    */
+    public void setSliderEnabled(JSlider slider, boolean enabled) {
+        slider.setEnabled(enabled);
+    }
+
+    /**
+    * Enables or disables snapping to ticks for the JSlider.
+     * @param slider The JSlider to modify
+    * @param snapToTicks true to enable snapping, false to disable it
+    */
+    public void setSnapToTicks(JSlider slider, boolean snapToTicks) {
+        slider.setSnapToTicks(snapToTicks);
+    }
+
+    /**
+     * Resets the JSlider to its default value (usually the minimum value).
+    * @param slider The JSlider to reset
+    */
+    public void resetSlider(JSlider slider) {
+        slider.setValue(slider.getMinimum());
+    }
+
+    /**
+    * Adds a listener to the JSlider that runs the inputted Runnable whenever the slider's value changes
+    * @param slider The JSlider to attach the listener to
+    * @param onValueChange A Runnable to execute when the slider's value changes. You can use a lambda expression or method reference to pass this in.
+    */
+    public void addSliderValueReactor(JSlider slider, Runnable onValueChange) {
+        slider.addChangeListener(e -> {
+            onValueChange.run();
+        });
+    }
+
+    //TODO: FIX THIS METHOD SO IT WORKS
+    
+    /**
+    * Sets the color of the slider's track.
+    * @param slider The JSlider to modify
+    * @param color The color to set for the track
+    */
+    private void setSliderTrackColor(JSlider slider, Color color) {
+        slider.setUI(new BasicSliderUI(slider) {
+            @Override
+            public void paintTrack(Graphics g) {
+
+                super.paintTrack(g); // Call the superclass method to draw the default track
+                g.setColor(color);
+                g.fillRect(trackRect.x, trackRect.y, trackRect.width, trackRect.height); // Fill the track
+                
+            }
+        });
+        slider.repaint();
+        slider.revalidate();
+    }
+
+    /**
+    * Sets the color of the slider's thumb.
+    * This will also turn the slider thumb into a rectangle so its shape will look a bit different
+     * @param slider The JSlider to modify
+    * @param color The color to set for the thumb
+    */
+    public void setSliderThumbColor(JSlider slider, Color color) {
+        slider.setUI(new BasicSliderUI(slider) {
+            @Override
+            public void paintThumb(Graphics g) {
+                super.paintThumb(g);
+                g.setColor(color);
+                g.fillRect(thumbRect.x, thumbRect.y, thumbRect.width, thumbRect.height); // Fill the thumb
+                
+                
+            }
+        });
+        slider.repaint();
+        slider.revalidate();
+    }
+
+    /**
+    * Adds a label to a specific value on the JSlider.
+    * @param slider The JSlider to modify
+    * @param value The value on the slider where the label should be added
+    * @param label The text of the label to add
+    */
+    public void addSliderLabel(JSlider slider, int value, String label) {
+        // Get the current label table or create a new one if it doesn't exist
+        Hashtable<Integer, JLabel> labelTable = (Hashtable<Integer, JLabel>) slider.getLabelTable();
+        if (labelTable == null) {
+            labelTable = new Hashtable<>();
+        }
+
+        // Add the new label at the specified value
+        labelTable.put(value, new JLabel(label));
+
+        // Set the updated label table 
+        slider.setLabelTable(labelTable);
+    }
+
+
+
+
 
     
 

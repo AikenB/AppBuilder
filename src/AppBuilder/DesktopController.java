@@ -33,7 +33,7 @@ import java.util.concurrent.Executors;
 public class DesktopController {
     Component component;
     Robot robot; 
-    private ExecutorService executor = Executors.newSingleThreadExecutor();
+    private static ExecutorService executor = Executors.newSingleThreadExecutor();
 
     
     /**
@@ -252,6 +252,90 @@ public class DesktopController {
         return Toolkit.getDefaultToolkit().createCustomCursor(scaledImage, new Point(0,0), name);
     }
 
+    /**
+    * Moves the mouse pointer to the specified screen coordinates.
+    * @param x The x-coordinate on the screen
+    * @param y The y-coordinate on the screen
+     */
+    public void moveMouse(int x, int y) {
+        executor.submit(() -> {
+            try {
+                robot.mouseMove(x, y); // Move the mouse to the specified coordinates
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+    }
+
+    /**
+    * Simulates a mouse click at the current mouse pointer location.
+    * 
+    * (InputEvent.BUTTON1_DOWN_MASK: Left mouse button,
+    * InputEvent.BUTTON2_DOWN_MASK: Middle mouse button,
+    * InputEvent.BUTTON3_DOWN_MASK: Right mouse button)
+    *
+    * @param button The mouse button to click. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/InputEvent.html
+    *               
+    */
+    public void clickMouse(int button , int delayMS) {
+        executor.submit(() -> {
+            try {
+                robot.mousePress(button); // Press the specified mouse button
+                robot.mouseRelease(button); // Release the specified mouse button
+                Thread.sleep(delayMS);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+    }
+
+    /**
+     * Holds down a mouse button at the current mouse pointer location.
+     * 
+     * (InputEvent.BUTTON1_DOWN_MASK: Left mouse button,
+     * InputEvent.BUTTON2_DOWN_MASK: Middle mouse button,
+     * InputEvent.BUTTON3_DOWN_MASK: Right mouse button)
+     * 
+     * @param button The mouse button to click. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/InputEvent.html
+     */
+    public void holdMouseClick(int button) {
+        executor.submit(()->{
+            
+            robot.mousePress(button);
+        });
+        
+    }
+
+    /**
+     * Releases a mouse button at the current mouse pointer location.
+     * 
+     * (InputEvent.BUTTON1_DOWN_MASK: Left mouse button,
+     * InputEvent.BUTTON2_DOWN_MASK: Middle mouse button,
+     * InputEvent.BUTTON3_DOWN_MASK: Right mouse button)
+     * 
+     * @param button The mouse button to click. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/InputEvent.html
+     */
+    public void releaseMouseClick(int button) {
+        executor.submit(()->{
+            
+            robot.mouseRelease(button);
+        });
+        
+    }
+
+    /**
+    * Simulates scrolling the mouse wheel.
+    * @param notches The number of notches to scroll. Positive values scroll down, negative values scroll up.
+    */
+    public void scrollMouseWheel(int notches) {
+        executor.submit(() -> {
+            try {
+                robot.mouseWheel(notches); // Scroll the mouse wheel by the specified number of notches
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+    }
 
     
 
