@@ -1,0 +1,29 @@
+plugins {
+    id 'application'
+    id 'java'
+}
+
+group = 'com.carlmontstudios'
+version = '1.0.0'
+
+sourceSets {
+    main {
+        java {
+            // Keep existing repository layout without moving source files.
+            srcDirs = ['src']
+        }
+        resources {
+            // Package non-Java assets that already live under src.
+            srcDirs = ['src']
+            include 'Audio/**', 'Images/**'
+        }
+    }
+}
+
+application {
+    mainClass = 'Main'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
