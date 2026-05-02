@@ -13,13 +13,8 @@ import java.awt.Point;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.InputEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -80,57 +75,57 @@ public class DesktopController {
         }
     }
 
-    // #region Desktop/File Methods
+//     // #region Desktop/File Methods
 
-    /**
-     * Opens a URL in the default web browser.
-     * @param url The URL to open
-     */
-    public void openURL(String url){
-        try {
-                // URL to open
-                URI uri = new URI(url);
+//     /**
+//      * Opens a URL in the default web browser.
+//      * @param url The URL to open
+//      */
+//     public void openURL(String url){
+//         try {
+//                 // URL to open
+//                 URI uri = new URI(url);
         
-                // Open the URL in the default browser
-                if (Desktop.isDesktopSupported()) {
-                    Desktop desktop = Desktop.getDesktop();
-                    desktop.browse(uri);
-                } else {
-                    JOptionPane.showMessageDialog(component, "Desktop not supported");
+//                 // Open the URL in the default browser
+//                 if (Desktop.isDesktopSupported()) {
+//                     Desktop desktop = Desktop.getDesktop();
+//                     desktop.browse(uri);
+//                 } else {
+//                     JOptionPane.showMessageDialog(component, "Desktop not supported");
                     
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(component, "URL cannot be accessed");
-            }
-    }
+//                 }
+//             } catch (Exception ex) {
+//                 ex.printStackTrace();
+//                 JOptionPane.showMessageDialog(component, "URL cannot be accessed");
+//             }
+//     }
 
-    /**
-     * Performs a Google search with the given input and opens the results in the default web browser.
-     * @param input The input to be searched on google (ex: Java programming tutorial)
-     */
+//     /**
+//      * Performs a Google search with the given input and opens the results in the default web browser.
+//      * @param input The input to be searched on google (ex: Java programming tutorial)
+//      */
 
-    public void google(String input) {
-    try {
-        // Encode the query for use in a URL
-        String encodedQuery = URLEncoder.encode(input, StandardCharsets.UTF_8.toString());
+//     public void google(String input) {
+//     try {
+//         // Encode the query for use in a URL
+//         String encodedQuery = URLEncoder.encode(input, StandardCharsets.UTF_8.toString());
 
-        // Construct the search URL (Google search in this case)
-        String searchURL = "https://www.google.com/search?q=" + encodedQuery;
+//         // Construct the search URL (Google search in this case)
+//         String searchURL = "https://www.google.com/search?q=" + encodedQuery;
 
-        // Open the search URL in the default browser
-        if (Desktop.isDesktopSupported()) {
-            Desktop desktop = Desktop.getDesktop();
-            desktop.browse(new URI(searchURL));
+//         // Open the search URL in the default browser
+//         if (Desktop.isDesktopSupported()) {
+//             Desktop desktop = Desktop.getDesktop();
+//             desktop.browse(new URI(searchURL));
             
-        } else {
-            JOptionPane.showMessageDialog(component, "Desktop is not supported on this system.");
-        }
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(component, "Error performing search: " + ex.getMessage());
-    }
-}
+//         } else {
+//             JOptionPane.showMessageDialog(component, "Desktop is not supported on this system.");
+//         }
+//     } catch (Exception ex) {
+//         ex.printStackTrace();
+//         JOptionPane.showMessageDialog(component, "Error performing search: " + ex.getMessage());
+//     }
+// }
     /**
      * Opens a file using the default application associated with the file type.
      * @param filePath The path to the file to be opened.
@@ -258,113 +253,113 @@ public class DesktopController {
         return Toolkit.getDefaultToolkit().createCustomCursor(scaledImage, new Point(0,0), name);
     }
 
-    /**
-    * Moves the mouse pointer to the specified screen coordinates.
-    * @param x The x-coordinate on the screen
-    * @param y The y-coordinate on the screen
-     */
-    public void moveMouse(int x, int y) {
-        executor.submit(() -> {
-            try {
-                robot.mouseMove(x, y); // Move the mouse to the specified coordinates
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
-    }
+    // /**
+    // * Moves the mouse pointer to the specified screen coordinates.
+    // * @param x The x-coordinate on the screen
+    // * @param y The y-coordinate on the screen
+    //  */
+    // public void moveMouse(int x, int y) {
+    //     executor.submit(() -> {
+    //         try {
+    //             robot.mouseMove(x, y); // Move the mouse to the specified coordinates
+    //         } catch (Exception ex) {
+    //             ex.printStackTrace();
+    //         }
+    //     });
+    // }
 
-    /**
-    * Simulates a mouse click at the current mouse pointer location.
-    * 
-    * (InputEvent.BUTTON1_DOWN_MASK: Left mouse button,
-    * InputEvent.BUTTON2_DOWN_MASK: Middle mouse button,
-    * InputEvent.BUTTON3_DOWN_MASK: Right mouse button)
-    *
-    * @param button The mouse button to click. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/InputEvent.html
-    * @param delayMS The delay in milliseconds after the mouse click is performed. This is useful for ensuring that the click is registered before any subsequent actions are taken.
-    *               
-    */
-    public void clickMouse(int button , int delayMS) {
-        executor.submit(() -> {
-            try {
-                robot.mousePress(button); // Press the specified mouse button
-                robot.mouseRelease(button); // Release the specified mouse button
-                Thread.sleep(delayMS);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
-    }
+    // /**
+    // * Simulates a mouse click at the current mouse pointer location.
+    // * 
+    // * (InputEvent.BUTTON1_DOWN_MASK: Left mouse button,
+    // * InputEvent.BUTTON2_DOWN_MASK: Middle mouse button,
+    // * InputEvent.BUTTON3_DOWN_MASK: Right mouse button)
+    // *
+    // * @param button The mouse button to click. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/InputEvent.html
+    // * @param delayMS The delay in milliseconds after the mouse click is performed. This is useful for ensuring that the click is registered before any subsequent actions are taken.
+    // *               
+    // */
+    // public void clickMouse(int button , int delayMS) {
+    //     executor.submit(() -> {
+    //         try {
+    //             robot.mousePress(button); // Press the specified mouse button
+    //             robot.mouseRelease(button); // Release the specified mouse button
+    //             Thread.sleep(delayMS);
+    //         } catch (Exception ex) {
+    //             ex.printStackTrace();
+    //         }
+    //     });
+    // }
 
-    /**
-     * Holds down a mouse button at the current mouse pointer location.
-     * 
-     * (InputEvent.BUTTON1_DOWN_MASK: Left mouse button,
-     * InputEvent.BUTTON2_DOWN_MASK: Middle mouse button,
-     * InputEvent.BUTTON3_DOWN_MASK: Right mouse button)
-     * 
-     * @param button The mouse button to click. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/InputEvent.html
-     */
-    public void holdMouseClick(int button) {
-        executor.submit(()->{
+    // /**
+    //  * Holds down a mouse button at the current mouse pointer location.
+    //  * 
+    //  * (InputEvent.BUTTON1_DOWN_MASK: Left mouse button,
+    //  * InputEvent.BUTTON2_DOWN_MASK: Middle mouse button,
+    //  * InputEvent.BUTTON3_DOWN_MASK: Right mouse button)
+    //  * 
+    //  * @param button The mouse button to click. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/InputEvent.html
+    //  */
+    // public void holdMouseClick(int button) {
+    //     executor.submit(()->{
             
-            robot.mousePress(button);
-        });
+    //         robot.mousePress(button);
+    //     });
         
-    }
+    // }
 
-    /**
-     * Releases a mouse button at the current mouse pointer location.
-     * 
-     * (InputEvent.BUTTON1_DOWN_MASK: Left mouse button,
-     * InputEvent.BUTTON2_DOWN_MASK: Middle mouse button,
-     * InputEvent.BUTTON3_DOWN_MASK: Right mouse button)
-     * 
-     * @param button The mouse button to click. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/InputEvent.html
-     */
-    public void releaseMouseClick(int button) {
-        executor.submit(()->{
-            try {
-                robot.mouseRelease(button);
-                Thread.sleep(50);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+    // /**
+    //  * Releases a mouse button at the current mouse pointer location.
+    //  * 
+    //  * (InputEvent.BUTTON1_DOWN_MASK: Left mouse button,
+    //  * InputEvent.BUTTON2_DOWN_MASK: Middle mouse button,
+    //  * InputEvent.BUTTON3_DOWN_MASK: Right mouse button)
+    //  * 
+    //  * @param button The mouse button to click. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/InputEvent.html
+    //  */
+    // public void releaseMouseClick(int button) {
+    //     executor.submit(()->{
+    //         try {
+    //             robot.mouseRelease(button);
+    //             Thread.sleep(50);
+    //         } catch (Exception ex) {
+    //             ex.printStackTrace();
+    //         }
             
-        });
+    //     });
         
-    }
+    // }
 
-    /**
-    * Simulates scrolling the mouse wheel.
-    * @param notches The number of notches to scroll. Positive values scroll down, negative values scroll up.
-    */
-    public void scrollMouseWheel(int notches) {
-        executor.submit(() -> {
-            try {
-                robot.mouseWheel(notches); // Scroll the mouse wheel by the specified number of notches
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
-    }
+    // /**
+    // * Simulates scrolling the mouse wheel.
+    // * @param notches The number of notches to scroll. Positive values scroll down, negative values scroll up.
+    // */
+    // public void scrollMouseWheel(int notches) {
+    //     executor.submit(() -> {
+    //         try {
+    //             robot.mouseWheel(notches); // Scroll the mouse wheel by the specified number of notches
+    //         } catch (Exception ex) {
+    //             ex.printStackTrace();
+    //         }
+    //     });
+    // }
 
-    /**
-     * Drags the mouse from the current position to the specified coordinates.
-     * @param x The x-coordinate to drag to
-     * @param y The y-coordinate to drag to
-     */
-    public void dragMouse(int x, int y) {
-        executor.submit(() -> {
-            try {
-                robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); // Press the left mouse button
-                robot.mouseMove(x, y); // Move the mouse to the specified coordinates
-                robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK); // Release the left mouse button
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
-    }
+    // /**
+    //  * Drags the mouse from the current position to the specified coordinates.
+    //  * @param x The x-coordinate to drag to
+    //  * @param y The y-coordinate to drag to
+    //  */
+    // public void dragMouse(int x, int y) {
+    //     executor.submit(() -> {
+    //         try {
+    //             robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); // Press the left mouse button
+    //             robot.mouseMove(x, y); // Move the mouse to the specified coordinates
+    //             robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK); // Release the left mouse button
+    //         } catch (Exception ex) {
+    //             ex.printStackTrace();
+    //         }
+    //     });
+    // }
 
     /**
     * Gets the current mouse X position relative to the entire screen. 
@@ -388,122 +383,122 @@ public class DesktopController {
 
     
 
-    // #region Keyboard Methods
+    // // #region Keyboard Methods
 
-    /**
-     * Simulates pressing a sequence of keys on the keyboard.
-     * @param keySequence A list of key codes representing the order of keys to press. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html to find the keycode for any key
-     * @param delayMS The delay in milliseconds between each key press
-     */
-    public void pressKeys(List<Integer> keySequence, int delayMS) {
+    // /**
+    //  * Simulates pressing a sequence of keys on the keyboard.
+    //  * @param keySequence A list of key codes representing the order of keys to press. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html to find the keycode for any key
+    //  * @param delayMS The delay in milliseconds between each key press
+    //  */
+    // public void pressKeys(List<Integer> keySequence, int delayMS) {
             
-        executor.submit(() -> {
-            try {
-                for (int keycode : keySequence) {
-                    robot.keyPress(keycode); // Press the key
-                    Thread.sleep(100);       // Hold the key briefly
-                    robot.keyRelease(keycode); // Release the key
-                    Thread.sleep(delayMS);  // Wait before pressing the next key
-                }
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-        });
-    }
+    //     executor.submit(() -> {
+    //         try {
+    //             for (int keycode : keySequence) {
+    //                 robot.keyPress(keycode); // Press the key
+    //                 Thread.sleep(100);       // Hold the key briefly
+    //                 robot.keyRelease(keycode); // Release the key
+    //                 Thread.sleep(delayMS);  // Wait before pressing the next key
+    //             }
+    //         } catch (InterruptedException ex) {
+    //             ex.printStackTrace();
+    //         }
+    //     });
+    // }
 
-    /**
-     * Simulates pressing a key once on the keyboard
-     * @param keycode The keycode representing the key on the keyboard to be pressed. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html to find the keycode for any key
-     * @param delayMS The delay in milliseconds after the key is pressed
-     */
-    public void pressKey(int keycode, int delayMS) {
+    // /**
+    //  * Simulates pressing a key once on the keyboard
+    //  * @param keycode The keycode representing the key on the keyboard to be pressed. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html to find the keycode for any key
+    //  * @param delayMS The delay in milliseconds after the key is pressed
+    //  */
+    // public void pressKey(int keycode, int delayMS) {
         
-        executor.submit(() -> {
-            try {
-                robot.keyPress(keycode);
-                robot.keyRelease(keycode);
-                Thread.sleep(delayMS); 
+    //     executor.submit(() -> {
+    //         try {
+    //             robot.keyPress(keycode);
+    //             robot.keyRelease(keycode);
+    //             Thread.sleep(delayMS); 
                 
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-        });
+    //         } catch (InterruptedException ex) {
+    //             ex.printStackTrace();
+    //         }
+    //     });
 
-    }
+    // }
 
-    /**
-     * holds down a key for a specified amount of time. Use this method only for typing situations that involve type keys (ex: a,b,1,2). 
-     * This actually just spams the key extremely fast (20ms intervals) for the specified time. This is done because on the computer when you are holding a key it repeadedly sends a signal that the key is pressed down. When typing, it only types the key each time it recieves the signal that it is pressed down.
-     * If this method doesn't work properly for your scenario, then try holdKey().
-     * @param keycode The keycode representing the key on the keyboard to be held down. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html to find the keycode for any key
-     * @param holdTime The time in seconds to hold the key down (limit is 60 seconds)
-     */
-    public void holdKey_Type(int keycode, double holdTime) {
-        executor.submit(() -> {
-            try {
-                int timeMS = (int) (holdTime * 1000); // Convert seconds to milliseconds
-                int elapsedTime = 0;
+    // /**
+    //  * holds down a key for a specified amount of time. Use this method only for typing situations that involve type keys (ex: a,b,1,2). 
+    //  * This actually just spams the key extremely fast (20ms intervals) for the specified time. This is done because on the computer when you are holding a key it repeadedly sends a signal that the key is pressed down. When typing, it only types the key each time it recieves the signal that it is pressed down.
+    //  * If this method doesn't work properly for your scenario, then try holdKey().
+    //  * @param keycode The keycode representing the key on the keyboard to be held down. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html to find the keycode for any key
+    //  * @param holdTime The time in seconds to hold the key down (limit is 60 seconds)
+    //  */
+    // public void holdKey_Type(int keycode, double holdTime) {
+    //     executor.submit(() -> {
+    //         try {
+    //             int timeMS = (int) (holdTime * 1000); // Convert seconds to milliseconds
+    //             int elapsedTime = 0;
 
-                while (elapsedTime < timeMS) {
-                    robot.keyPress(keycode); // Press the key
-                    Thread.sleep(10); // Hold the key briefly
-                    robot.keyRelease(keycode); // Release the key
-                    Thread.sleep(10); // Wait for the remaining interval
-                    elapsedTime += 20; // Increment elapsed time
-                }
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-        });
-    }
+    //             while (elapsedTime < timeMS) {
+    //                 robot.keyPress(keycode); // Press the key
+    //                 Thread.sleep(10); // Hold the key briefly
+    //                 robot.keyRelease(keycode); // Release the key
+    //                 Thread.sleep(10); // Wait for the remaining interval
+    //                 elapsedTime += 20; // Increment elapsed time
+    //             }
+    //         } catch (InterruptedException ex) {
+    //             ex.printStackTrace();
+    //         }
+    //     });
+    // }
 
-    /**
-     * holds down a key for a specified amount of time. This method can be used in scenarios that do not involve typing. 
-     * If this method doesn't work properly for your scenario, then try holdKey_Type().
-     * @param keycode The keycode representing the key on the keyboard to be held down. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html to find the keycode for any key
-     * @param holdTime The time in seconds to hold the key down (limit is 60 seconds)
-     */
-    public void holdKey(int keycode, double holdTime) {
-        executor.submit(() -> {
-            try {
-                int timeMS = (int) (holdTime * 1000); // Convert seconds to milliseconds
-                robot.keyPress(keycode);
-                Thread.sleep(timeMS); 
-                robot.keyRelease(keycode); // Release the key
+    // /**
+    //  * holds down a key for a specified amount of time. This method can be used in scenarios that do not involve typing. 
+    //  * If this method doesn't work properly for your scenario, then try holdKey_Type().
+    //  * @param keycode The keycode representing the key on the keyboard to be held down. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html to find the keycode for any key
+    //  * @param holdTime The time in seconds to hold the key down (limit is 60 seconds)
+    //  */
+    // public void holdKey(int keycode, double holdTime) {
+    //     executor.submit(() -> {
+    //         try {
+    //             int timeMS = (int) (holdTime * 1000); // Convert seconds to milliseconds
+    //             robot.keyPress(keycode);
+    //             Thread.sleep(timeMS); 
+    //             robot.keyRelease(keycode); // Release the key
 
                 
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-        });
-    }
+    //         } catch (InterruptedException ex) {
+    //             ex.printStackTrace();
+    //         }
+    //     });
+    // }
 
-    /**
-     * Holds down a key until it is released. This method is useful for scenarios where you want to keep a key pressed down without specifying a hold time.
-     * @param keycode The keycode representing the key on the keyboard to be held down. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html to find the keycode for any key
-     */
-    public void holdKey(int keycode) {
-        executor.submit(()->{
+    // /**
+    //  * Holds down a key until it is released. This method is useful for scenarios where you want to keep a key pressed down without specifying a hold time.
+    //  * @param keycode The keycode representing the key on the keyboard to be held down. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html to find the keycode for any key
+    //  */
+    // public void holdKey(int keycode) {
+    //     executor.submit(()->{
             
-            robot.keyPress(keycode);
-        });
+    //         robot.keyPress(keycode);
+    //     });
         
-    }
-    /**
-     * Releases a key that was previously pressed down. This method is useful for scenarios where you want to release a key after holding it down.
-     * @param keycode The keycode representing the key on the keyboard to be released. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html to find the keycode for any key
-     */
-    public void releaseKey(int keycode) {
-        executor.submit(()->{
-            try {
-                robot.keyRelease(keycode);
-                Thread.sleep(50);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
+    // }
+    // /**
+    //  * Releases a key that was previously pressed down. This method is useful for scenarios where you want to release a key after holding it down.
+    //  * @param keycode The keycode representing the key on the keyboard to be released. See https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html to find the keycode for any key
+    //  */
+    // public void releaseKey(int keycode) {
+    //     executor.submit(()->{
+    //         try {
+    //             robot.keyRelease(keycode);
+    //             Thread.sleep(50);
+    //         } catch (InterruptedException ex) {
+    //             ex.printStackTrace();
+    //         }
             
-        });
+    //     });
         
 
-    }
+    // }
 }
