@@ -1,45 +1,28 @@
+/**
+ * @author Aiken Bouis (CHS Studios)
+ */
+
 package AppBuilder;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.management.ConstructorParameters;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.JTextArea;
-import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JSlider;
-import javax.swing.JComponent;
-
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.event.ActionListener;
-
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.geom.AffineTransform;
-import java.io.File;         // For handling file operations
-import javax.swing.JFileChooser;
-
-import java.awt.Color;       // For setting background colors
-import java.awt.Component;
-import java.awt.Font;        // For customizing fonts
-import java.awt.Graphics;    // For custom painting in `paintComponent()`
-import java.awt.Graphics2D;
-import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Map;
-import javax.swing.Timer;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSlider;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicSliderUI;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.DocumentFilter;

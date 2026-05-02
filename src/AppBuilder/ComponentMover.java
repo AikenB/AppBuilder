@@ -1,5 +1,10 @@
+/**
+ * @author Aiken Bouis (CHS Studios)
+ */
+
 package AppBuilder;
 import java.awt.Component;
+
 import javax.swing.SwingUtilities;
 
 /**

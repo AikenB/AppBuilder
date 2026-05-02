@@ -1,4 +1,11 @@
+/**
+ * @author Aiken Bouis (CHS Studios)
+ */
+
 package AppBuilder;
+import java.awt.AWTException;
+import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.MouseInfo;
@@ -6,27 +13,24 @@ import java.awt.Point;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
+import java.awt.event.InputEvent;
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.List;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-
-import javax.swing.JFrame;
-
-import java.awt.AWTException;
-import java.awt.Component;
-import java.awt.Cursor;
-
-import javax.sound.sampled.*;
-import javax.swing.JOptionPane;
-import java.io.IOException;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * The DesktopController class provides methods to interact with the computer itself, such as opening files, URLs, and playing sounds. 
